@@ -1,7 +1,7 @@
-package phase1Base;
+package phase2;
 
 import java.math.BigInteger;
-import static phase1Base.Common.*;
+import static phase2.Common.*;
 
 /**
  * @author #04 | Moom Firdous 

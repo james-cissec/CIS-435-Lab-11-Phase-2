@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package phase1Base;
+// package phase1Base;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import static phase1Base.Common.*;
-import phase1Base.Common.Role;
+ import static phase2.Common.*;
+import phase2.Common.Role;
 import java.util.Random;
 
 /**
