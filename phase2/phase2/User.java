@@ -5,6 +5,7 @@
  */
 // package phase1Base;
 
+package phase2;
 import java.math.BigInteger;
 import java.util.Arrays;
  import static phase2.Common.*;

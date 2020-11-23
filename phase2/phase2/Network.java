@@ -1,6 +1,7 @@
 package phase2;
 
 import java.math.BigInteger;
+import Packet.*;
 
 /**
  *
@@ -42,6 +43,7 @@ public class Network {
     
     public void pkGetHacked() {
 
+        // Simulates an attacker changing the cipher of the sent message
         System.out.println("XXXXX   packet gets hacked   XXXXXX");
 
         BigInteger cipher = this.pk.getCipher();
@@ -64,7 +66,7 @@ public class Network {
             System.out.println(netStr);
 
         }
-        System.out.println("|     END of the Internet         |\n\n");
+        System.out.println("|     END of the Internet         |\n\n"); // F
         return this.pk;
 
     }
