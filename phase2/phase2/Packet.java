@@ -42,4 +42,10 @@ public class Packet{
         this.KsDigSig = newDigSig;
         return;
     }
+
+    @Override
+    public String toString(){
+        return "\n--> Packet contains  | Cipher: " + this.getCipher() + " | Ks: " + this.getEncryptedKs()
+                    + " | DigSig: " + this.getKsDigSig() + " |  <--\n";
+    }
 }
