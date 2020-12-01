@@ -42,58 +42,53 @@ public class Simulator{
         System.out.println("\n==> Receiver decrypts msg: " + msg.toString() + "\n\n");
     }
 
-    public static void init(User amyUser, User bobReceiver)
-    {
+    public static void init(User amyUser, User bobReceiver) {
         String case01 = "Phase 2: #0_1 | Initalize Sender";
         System.out.println(Common.caseSeperator("+", case01));
-        
 
-
-        
-        // James: Some of this can probably be copied and pasted from our tests ran in Phase 1
+        // James: Some of this can probably be copied and pasted from one of our tests
+        // ran in Phase 1
     }
 
     public static User createSender(String name, boolean fixedData) {
 
-        System.out.println("\n--- Step #" + step + ": START - Sender generates\t" + Common.padding);
+        System.out.println("\n--- Step #0: START - Sender generates\t" + Common.padding);
         Role sendRole = Role.SENDER;
         User send = new User(name, sendRole, fixedData);
-        System.out.print("   | "+ send.toString()+ "\n");
+        System.out.print("   | " + send.toString() + "\n");
         send.toString();
         send.printDetails();
-        System.out.println("--- Step #" + step + ": END of this Step \t\t" + Common.padding + "\n");
+        System.out.println("--- Step #0: END of this Step \t\t" + Common.padding + "\n");
         return send;
     }
 
     public static User createReceiver(String name) {
 
-        step = 1;
-        System.out.println("\n--- Step #" + step + ": START - Receiver generates\t" + Common.padding);
+        System.out.println("\n--- Step #0: START - Receiver generates\t" + Common.padding);
         Role recvRole = Role.RECEIVER;
         User recv = new User(name, recvRole);
-        System.out.print("   | "+ recv.toString()+ "\n");
+        System.out.print("   | " + recv.toString() + "\n");
         recv.toString();
         recv.printDetails();
-        System.out.println("--- Step #" + step + ": END of this Step \t\t" + Common.padding + "\n");
+        System.out.println("--- Step #0: END of this Step \t\t" + Common.padding + "\n");
         return recv;
     }
 
     public static void useCryptography(User user) {
 
         Cryptography crypto = new Cryptography();
-        // James: I honestly don't remember what's supposed to go in here
+        // James: I honestly don't remember what's supposed to go in here, we didn't use
+        // it last time
 
-        //TODO
-        
     }
 
-    public static BigInteger senderOperations(User sender, User receiver, Packet packet)
-    {
-        //TODO
+    public static BigInteger senderOperations(User sender, User receiver, Packet packet) {
+        // TODO
+
         // Get message
         System.out.println("\nStep #01: Get message\n" + Common.indent1 + "Message: " + packet.getCipher());
         // Hash message
-        Cryptography crypto = new Cryptography();
+        // Cryptography crypto = new Cryptography();
         BigInteger hash = crypto.hash(packet.getCipher(), sender.getHashBase());
         System.out.println("\nStep #02: Hash message\n" + Common.indent1 + "Hash: " + hash);
         // Encrypt hashed message to generate the digsig
@@ -123,15 +118,64 @@ public class Simulator{
         // Ciphertext is already in packet
         packet.setKsDigSig(hash);
         System.out.println("\n" + packet.toString());
+        return packet.getCipher();
         
     }
 
     public static BigInteger receiverOperations(User sender, User receiver, Packet packet)
     {
-        //TODO
         // Receive packet from the Network
-        // Split the three fields of the packet
+        System.out.println("\nStep #01: Receive the packet from the Network\n");
+        packet.toString();
+
+        // Split the packet
+        System.out.println("\nStep #02: Split the packet into 3 parts\n" + Common.indent1);
+        System.out.println("Ciphertext: " + packet.getCipher() + "\nEncrypted Ks: " + packet.getEncryptedKs() + "\nMAC: " + packet.getKsDigSig());
+        BigInteger msg, Ks, digSig;
+        
         // Decrypt Ks with its private key
+        System.out.println("\nStep #03: Decrypt Ks with its private key" + Common.indent1);
+        Ks = Ks.pow(receiver.getPrivateKey()[1]);
+        Ks = Ks.mod(receiver.getPrivateKey()[0]);
+        System.out.println("\nDecrypted Ks is: " + Ks);
+        //TODO
+
         // Decrypt message with the session key
+        System.out.println("\nStep #04: Decrypt the ciphertext with the session key" + Common.indent1);
+        msg = Cryptography.shift(packet.getCipher(), Ks.not());
+        System.out.println("\nPlaintext is: " + msg);
+        //TODO
+
+        // Decrypt the signature with the session key
+        System.out.println("\nStep #05: Decrypt the signature with the session key" + Common.indent1);
+        digSig = Cryptography.shift(packet.getKsDigSig(), Ks.not());
+        System.out.println("Signature is: " + digSig);
+        //TODO
+
+        // Hash the message from Step 4
+        System.out.println("\nStep #06: Hash the message from Step #04" + Common.indent1);
+        BigInteger calcHash = crypto.hash(msg, sender.getHashBase());
+        System.out.println("Calculated Hash: " + calcHash);
+        //TODO
+
+        // Decrypt signature from Step 5 with the sender’s public key
+        System.out.println("\nStep #07: Decrypt signature from Step #05 with the Sender’s public key" + Common.indent1);
+        digSig = digSig.pow(sender.getPubKey()[1]);
+        digSig = digSig.mod(sender.getPubKey()[0]);
+        System.out.println("\nDecrypted signature: " + digSig);
+        //TODO
+
+        // Compare the hash results from Step 6 and Step 7
+        System.out.println("\nStep #08: Compare calculated hash value and send hash value" + Common.indent1 + "\nAre " + calcHash + " and " + sentHash + " equal?");
+        if(calcHash == sentHash)
+        {
+            System.out.println("YES. Message is indeed the original sent by the Sender.");
+        }
+        else{
+            System.out.println("NO. Message is not the original or there was an error.");
+        }
+        //TODO
+
+        
     }
 }
