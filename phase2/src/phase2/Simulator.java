@@ -21,8 +21,8 @@ public class Simulator{
             System.out.println("----- Using FIXED Data -----\n");
             EncryptedKs = BigInteger.valueOf(5);
             Cipher = BigInteger.valueOf(17);
-            KsDigSig = BigInteger.valueOf(5);
-            Packet fixedDataPacket = new Packet(EncryptedKs, Cipher, KsDigSig);
+            KsDigSig = BigInteger.valueOf(5 /*TO DO */);
+            DataPacket = new Packet(EncryptedKs, Cipher, KsDigSig);
 
         }
         else {
