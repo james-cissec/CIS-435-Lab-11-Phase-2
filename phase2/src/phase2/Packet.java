@@ -15,13 +15,18 @@ public class Packet{
         KsDigSig = BigInteger.ZERO;
     }
 
+    Packet(BigInteger EncryptedKs, BigInteger Cipher, BigInteger KSDigSig){
+        encryptedKs = EncryptedKs;
+        cipher = Cipher;
+        KsDigSig = KSDigSig;
+    }
+
     public BigInteger getEncryptedKs(){
         return encryptedKs;
     }
 
     public void setEncryptedKs(BigInteger newKs){
         this.encryptedKs = newKs;
-        return;
     }
 
     public BigInteger getCipher(){
@@ -30,7 +35,6 @@ public class Packet{
 
     public void setCipher(BigInteger newVal){
         this.cipher = newVal;
-        return;
     }
 
     public BigInteger getKsDigSig(){
@@ -40,7 +44,6 @@ public class Packet{
     public void setKsDigSig(BigInteger newDigSig)
     {
         this.KsDigSig = newDigSig;
-        return;
     }
 
     @Override

@@ -10,9 +10,19 @@ public class Simulator{
     public static void main(String[] args)
     {
         boolean fixedData = true;
+
+        BigInteger EncryptedKs;
+        BigInteger Cipher;
+        BigInteger KsDigSig;
+        Packet DataPacket;
+
         if (fixedData)
         {
             System.out.println("----- Using FIXED Data -----\n");
+            EncryptedKs = BigInteger.valueOf(5);
+            Cipher = BigInteger.valueOf(17);
+            KsDigSig = BigInteger.valueOf(5);
+            Packet fixedDataPacket = new Packet(EncryptedKs, Cipher, KsDigSig);
 
         }
         else {
