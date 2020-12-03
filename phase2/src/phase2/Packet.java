@@ -15,12 +15,6 @@ public class Packet{
         KsDigSig = BigInteger.ZERO;
     }
 
-    Packet(BigInteger EncryptedKs, BigInteger Cipher, BigInteger KSDigSig){
-        encryptedKs = EncryptedKs;
-        cipher = Cipher;
-        KsDigSig = KSDigSig;
-    }
-
     public BigInteger getEncryptedKs(){
         return encryptedKs;
     }

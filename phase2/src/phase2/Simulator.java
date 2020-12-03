@@ -5,29 +5,31 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import phase2.Common.*;
 import phase2.Network;
+import java.util.Random;
 
 public class Simulator{
     public static void main(String[] args)
     {
         boolean fixedData = true;
 
-        BigInteger EncryptedKs;
-        BigInteger Cipher;
-        BigInteger KsDigSig;
-        Packet DataPacket;
+        Packet dataPacket = new Packet();
 
         if (fixedData)
         {
             System.out.println("----- Using FIXED Data -----\n");
-            EncryptedKs = BigInteger.valueOf(5);
-            Cipher = BigInteger.valueOf(17);
-            KsDigSig = BigInteger.valueOf(5 /*TO DO */);
-            DataPacket = new Packet(EncryptedKs, Cipher, KsDigSig);
+            BigInteger fixedMsg = BigInteger.valueOf(17);
+           
+            dataPacket.setCipher(fixedMsg);
 
         }
         else {
             System.out.println("----- Using RANDOM Data -----\n");
-            !fixedData;
+            fixedData = !fixedData;
+
+            Random r = new Random();
+            int randMsg = r.nextInt((100-1) + 1) + 1;
+            dataPacket.setCipher(BigInteger.valueOf(randMsg));
+            
         }
 
         User amySender = createSender("Amy", fixedData);
@@ -39,7 +41,7 @@ public class Simulator{
 
         String case1 = "Phase 2: Secure Message Communication (CIA)";
 
-        Packet senderPk = senderOperations(amySender, bobReceiver);
+        Packet senderPk = senderOperations(amySender, bobReceiver, dataPacket);
 
         System.out.println("\n\n==> Sender sends packet to Network: \n" + senderPk.toString());
 
@@ -92,7 +94,7 @@ public class Simulator{
 
     }
 
-    public static BigInteger senderOperations(User sender, User receiver, Packet packet) {
+    public static Packet senderOperations(User sender, User receiver, Packet packet) {
         // TODO
 
         // Get message
@@ -128,7 +130,7 @@ public class Simulator{
         // Ciphertext is already in packet
         packet.setKsDigSig(hash);
         System.out.println("\n" + packet.toString());
-        return packet.getCipher();
+        return packet;
         
     }
 
